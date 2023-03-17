@@ -16,7 +16,9 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
     height: props.height,
   });
 
-  const colors = ["#f87171", "#a3e635", "#34d399"];
+  let currentColor = color;
+
+  const drawingColors = ["#f87171", "#a3e635", "#34d399"];
 
   useEffect(() => {
     setDimensions({
@@ -29,7 +31,6 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
     if (canvasRef.current) {
       const renderCtx = canvasRef.current.getContext("2d");
       if (renderCtx) {
-        renderCtx.fillStyle = "black";
         setContext(renderCtx);
       }
     }
@@ -51,7 +52,6 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
   const startDrawing = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
-    // e.preventDefault();
     if (!context) return;
 
     const { x, y } = getCoordinates(e);
@@ -67,7 +67,6 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
   const draw = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
-    // e.preventDefault();
     if (!drawing || !context) return;
 
     const { x, y } = getCoordinates(e);
@@ -95,8 +94,6 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
 
   const saveCanvas = () => {
     if (!canvasRef.current) return;
-
-    // Create a temporary canvas with the same dimensions as the original canvas
     const tempCanvas = document.createElement("canvas");
     if (dimensions.width && dimensions.height && tempCanvas) {
       tempCanvas.width = dimensions.width;
@@ -104,15 +101,11 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
       const tempContext = tempCanvas.getContext("2d");
 
       if (!tempContext) return;
-
-      // Fill the temporary canvas with the desired background color
-      tempContext.fillStyle = "black"; // Change this to the desired background color
+      tempContext.fillStyle = "black";
       tempContext.fillRect(0, 0, dimensions.width, dimensions.height);
 
-      // Draw the original canvas onto the temporary canvas
       tempContext.drawImage(canvasRef.current, 0, 0);
 
-      // Generate the data URL from the temporary canvas
       const dataURL = tempCanvas.toDataURL("image/png");
 
       // Create a download link and trigger the download
@@ -127,7 +120,13 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
 
   return (
     <div
-      style={{ border: "2px solid white", padding: "1em", touchAction: "none" }}
+      style={{
+        border: "4px solid white",
+        borderRadius: "10px",
+        padding: "1em",
+        touchAction: "none",
+        backgroundImage: "linear-gradient(blue, blue)",
+      }}
     >
       <canvas
         ref={canvasRef}
@@ -140,24 +139,52 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
         onTouchStart={startDrawing}
         onTouchEnd={stopDrawing}
         onTouchMove={draw}
-        style={{ touchAction: "none", background: "black" }}
+        style={{
+          touchAction: "none",
+          background: "black",
+        }}
       />
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        {colors.map((color) => (
+        {drawingColors.map((color) => (
           <button
             key={color}
-            style={{ backgroundColor: color, margin: "5px" }}
+            style={{
+              backgroundColor: `${color === currentColor ? color : "black"}`,
+              color: `${color === currentColor ? "black" : color}`,
+              margin: "5px",
+              padding: "20px 10px",
+              borderRadius: "5px",
+              border: `${color} 2px solid`,
+            }}
             onClick={() => setColor(color)}
           >
             {color}
           </button>
         ))}
-        <button style={{ margin: "5px" }} onClick={clearCanvas}>
-          Clear
+        <button
+          style={{
+            margin: "5px",
+            background: "transparent",
+            border: "white 2px solid",
+            padding: "20px 10px",
+            borderRadius: "5px",
+          }}
+          onClick={clearCanvas}
+        >
+          Clear Drawing
         </button>
-        <button style={{ margin: "5px" }} onClick={saveCanvas}>
+        <button
+          style={{
+            margin: "5px",
+            background: "green",
+            border: "white 2px solid",
+            padding: "20px 20px",
+            borderRadius: "5px",
+          }}
+          onClick={saveCanvas}
+        >
           Save
         </button>
       </div>
