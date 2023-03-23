@@ -15,20 +15,22 @@ export default async function Home() {
   return (
     <main className={styles.main} style={{ background: "black" }}>
       <CanvasDrawer />
-      <div className="flex flex-wrap gap-4 justify-start m-4 items-center">
-        {data?.map((file) => (
-          <Image
-            key={file.id}
-            src={
-              "https://tkcaaymkxvrpewbwspwh.supabase.co/storage/v1/object/public/friend-drawings/" +
-              file.name
-            }
-            alt={file.name}
-            width={100}
-            height={100}
-            className="h-auto w-auto drawn-border mx-auto"
-          />
-        ))}
+      <div className="stack px-4 ">
+        <div className="flex flex-wrap gap-4 justify-start items-center">
+          {data?.map((file) => (
+            <Image
+              key={file.id}
+              src={
+                "https://tkcaaymkxvrpewbwspwh.supabase.co/storage/v1/object/public/friend-drawings/" +
+                file.name
+              }
+              alt={file.name}
+              width={100}
+              height={100}
+              className="h-auto w-auto drawn-border"
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
