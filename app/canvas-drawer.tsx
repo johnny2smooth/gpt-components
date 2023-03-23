@@ -154,11 +154,8 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
   return (
     <div
       style={{
-        border: "4px solid white",
-        borderRadius: "10px",
         padding: "1em",
         touchAction: "none",
-        backgroundImage: "linear-gradient(blue, blue)",
       }}
     >
       <canvas
@@ -176,10 +173,9 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
           touchAction: "none",
           background: "black",
         }}
+        className="drawn-border"
       />
-      <div
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      >
+      <div className="flex flex-wrap justify-center">
         {drawingColors.map((color) => (
           <button
             key={color}
@@ -189,7 +185,7 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
               margin: "5px",
               padding: "20px 10px",
               borderRadius: "5px",
-              border: `${color} 2px solid`,
+              border: `8px solid ${color}`,
             }}
             onClick={() => setColor(color)}
           >
