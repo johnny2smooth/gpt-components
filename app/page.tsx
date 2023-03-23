@@ -8,7 +8,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const revalidate = 0;
 export default async function Home() {
-  let publicUrls: string[] = [];
   const { data } = await supabase.storage
     .from(process.env.SUPABASE_BUCKET!)
     .list();
