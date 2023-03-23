@@ -1,12 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = "https://tkcaaymkxvrpewbwspwh.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrY2FheW1reHZycGV3YndzcHdoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzkyNTYxMDUsImV4cCI6MTk5NDgzMjEwNX0.ncZ35Lo4RkIJaDhorjIyioqNAL8JrIhnB2YZ2dg1e8Q";
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "./supabase";
 
 interface CanvasDrawerProps {
   width?: number;
@@ -130,7 +124,6 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
     canvas: HTMLCanvasElement,
     fileName: string
   ): Promise<void> {
-    // Convert the canvas to a Blob
     const blob = await new Promise<Blob>((resolve) => {
       canvas.toBlob((blob) => {
         if (blob) {
@@ -141,7 +134,6 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
       }, "image/png");
     });
 
-    // Upload the Blob to your Supabase bucket
     const { error } = await supabase.storage
       .from("friend-drawings")
       .upload(fileName, blob, { contentType: "image/png" });
@@ -155,7 +147,7 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
 
   function generateUniqueFileName() {
     const timestamp = new Date().toISOString();
-    const randomString = Math.random().toString(36).substr(2, 9);
+    const randomString = Math.random().toString(36).slice(2, 9);
     return `user-image-${timestamp}-${randomString}.png`;
   }
 
