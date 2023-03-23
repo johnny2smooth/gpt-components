@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <main className={styles.main} style={{ background: "black" }}>
       <CanvasDrawer />
-      <div className="flex flex-wrap gap-4 justify-start m-4">
+      <div className="flex flex-wrap gap-4 justify-start m-4 items-center">
         {data?.map((file) => (
           <Image
             key={file.id}
@@ -26,7 +26,7 @@ export default async function Home() {
             alt={file.name}
             width={100}
             height={100}
-            className="h-auto w-auto grow drawn-border"
+            className="h-auto w-auto drawn-border mx-auto"
           />
         ))}
       </div>

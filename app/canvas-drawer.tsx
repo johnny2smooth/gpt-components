@@ -196,10 +196,10 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
           style={{
             margin: "5px",
             background: "transparent",
-            border: "white 2px solid",
             padding: "20px 10px",
             borderRadius: "5px",
           }}
+          className="border-2 border-blue-300 border-solid text-blue-300"
           onClick={clearCanvas}
         >
           Clear Drawing
@@ -207,11 +207,11 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
         <button
           style={{
             margin: "5px",
-            background: "green",
-            border: "white 2px solid",
+
             padding: "20px 20px",
             borderRadius: "5px",
           }}
+          className="border-2 border-green-300 border-solid bg-green-300 text-black font-bold text-2xl"
           onClick={saveCanvas}
         >
           Save
