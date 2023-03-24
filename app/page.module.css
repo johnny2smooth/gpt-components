@@ -6,6 +6,33 @@
   min-height: 100vh;
 }
 
+.hiddenText {
+  white-space: pre-wrap;
+}
+
+.outputContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--green-800);
+  border-right: 12px solid var(--green-600);
+  animation: cursorBlink 600ms ease-in-out infinite alternate;
+}
+
+@keyframes cursorBlink {
+  from {
+    visibility: visible;
+  }
+  to {
+    visibility: hidden;
+  }
+}
+
 .description {
   display: inherit;
   justify-content: inherit;

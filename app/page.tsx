@@ -3,8 +3,7 @@ import styles from "./page.module.css";
 import CanvasDrawer from "./canvas-drawer";
 import { supabase } from "./supabase";
 import Image from "next/image";
-
-const inter = Inter({ subsets: ["latin"] });
+import TypingEffect from "./TypingEffect";
 
 export const revalidate = 0;
 export default async function Home() {
@@ -14,6 +13,10 @@ export default async function Home() {
 
   return (
     <main className={styles.main} style={{ background: "black" }}>
+      <TypingEffect
+        textContent="hello my friend! Am I gradually rendered? Or not so much???"
+        typingSpeed={50}
+      />
       <CanvasDrawer />
       <div className="stack px-4 ">
         <div className="flex flex-wrap gap-4 justify-start items-center">
