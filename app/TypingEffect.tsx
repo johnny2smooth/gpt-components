@@ -1,6 +1,6 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./page.module.css";
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './page.module.css';
 
 interface TypingEffectProps {
   textContent: string;
@@ -14,6 +14,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({
   const outputTextRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState<boolean>(false);
+  let originalText = textContent;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,7 +57,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({
           outputTextRef.current.parentElement
         ) {
           outputTextRef.current.parentElement.insertAdjacentHTML(
-            "beforeend",
+            'afterend',
             `<div class=${styles.cursor}></div>`
           );
         }
@@ -64,11 +65,20 @@ const TypingEffect: React.FC<TypingEffectProps> = ({
     }
   }, [isInViewport, textContent, typingSpeed]);
 
+  useEffect(() => {
+    if (outputTextRef.current) {
+      outputTextRef.current.textContent = textContent[0];
+    }
+  }, [textContent]);
+
   return (
-    <div ref={containerRef} className={`${styles.outputContainer}`}>
+    <div
+      ref={containerRef}
+      className={`flex flex-col items-center justify-center w-[90vw] min-h-[8vh] px-6 mt-4`}
+    >
       <span
         ref={outputTextRef}
-        className={`text-white ${styles.hiddenText}`}
+        className={`text-white  ${styles.hiddenText}`}
       ></span>
     </div>
   );

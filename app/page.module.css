@@ -1,7 +1,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
 }
@@ -10,15 +10,13 @@
   white-space: pre-wrap;
 }
 
-.outputContainer {
+/* .outputContainer {
   position: relative;
   overflow: hidden;
-}
+} */
 
 .cursor {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   background-color: var(--green-800);
   border-right: 12px solid var(--green-600);
   animation: cursorBlink 600ms ease-in-out infinite alternate;
@@ -123,7 +121,7 @@
 
 .center::before,
 .center::after {
-  content: "";
+  content: '';
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -151,7 +149,7 @@
 
 .thirteen::before,
 .thirteen::after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: -1;
 }
