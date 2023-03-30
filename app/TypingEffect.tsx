@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
+// This can be done with styles alone...
 
 interface TypingEffectProps {
   textContent: string;

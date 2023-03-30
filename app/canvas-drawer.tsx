@@ -119,13 +119,13 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      uploadCanvasToSupabase(tempCanvas, generateUniqueFileName());
+      uploadCanvasToSupabase(tempCanvas, prompt);
     }
   };
 
   async function uploadCanvasToSupabase(
     canvas: HTMLCanvasElement,
-    fileName: string
+    prompt: string
   ): Promise<void> {
     const blob = await new Promise<Blob>((resolve) => {
       canvas.toBlob((blob) => {
@@ -137,33 +137,23 @@ const CanvasDrawer: React.FC<CanvasDrawerProps> = (props) => {
       }, 'image/png');
     });
 
-    const { error } = await supabase.storage
-      .from('friend-drawings')
-      .upload(fileName, blob, { contentType: 'image/png' });
+    const response = await fetch('http://localhost:3000/api/drawings', {
+      method: 'POST',
+      body: JSON.stringify({
+        blob: blob,
+        prompt: prompt,
+      }),
+    });
 
-    if (error) {
-      console.error('Error uploading image:', error.message);
-    } else {
-      console.log('Image uploaded successfully');
-      clearCanvas();
-      setPrompt('now draw something cooler');
-      // setNewPrompt();
-    }
+    let result: string = await response.json();
+    // if (result.includes('Error')) {
+    //   throw new Error(result);
+    // } else {
+    console.log(result);
+    clearCanvas();
+    setPrompt('now draw something cooler');
+    // }
   }
-
-  // async function setNewPrompt() {
-  //   const { data, error } = await supabase
-  //     .from('prompts')
-  //     .select('prompt')
-  //     .eq('id', 1);
-
-  //   if (error) {
-  //     console.error('Error getting prompt:', error.message);
-  //   } else {
-  //     console.log('Prompt retrieved successfully');
-  //     console.log(data);
-  //   }
-  // };
 
   function generateUniqueFileName() {
     const timestamp = new Date().toISOString();
